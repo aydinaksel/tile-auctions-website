@@ -11,6 +11,7 @@ fetch('data/products.json')
         box.innerHTML = `
           <h3>${prod["Item Description"]}</h3>
           <p><strong>Price:</strong> $${prod["Minimum Sales Price"]}</p>
+          <p><strong>In Stock:</strong> ${prod["In Stock"]}</p>
           <p><strong>Size:</strong> ${prod["Item Description"].match(/\d+x\d+/) || 'N/A'}</p>
         `;
         box.onclick = () => {
@@ -29,8 +30,11 @@ fetch('data/products.json')
 
       const container = document.getElementById('product-detail');
       container.innerHTML = `
-        <img src="images/${itemNo}.webp" alt="${product["Item Description"]}" onerror="this.src='images/placeholder.jpg'"/>
-        <div class="product-info">
+        <button class="back-btn" onclick="window.history.back()">← Back</button>
+        <div class="product-image-section">
+          <img src="images/${itemNo}.webp" alt="${product["Item Description"]}" onerror="this.src='images/placeholder.jpg'" />
+        </div>
+        <div class="product-info-section">
           <h2>${product["Item Description"]}</h2>
           <p><strong>Price:</strong> $${product["Minimum Sales Price"]}</p>
           <p><strong>Stock:</strong> ${product["In Stock"]}</p>
@@ -39,8 +43,21 @@ fetch('data/products.json')
           <p><strong>Units per Crate:</strong> ${product["Units per Crate"]}</p>
           <p><strong>Pieces per Crate:</strong> ${product["Pieces per Crate"]}</p>
           <p><strong>Barcode:</strong> ${product["Bar Code"]}</p>
-          <button>Purchase</button>
+          <button class="purchase-btn">Purchase</button>
         </div>
       `;
     }
   });
+
+// Dark mode toggle logic
+const toggleThemeButton = document.getElementById('toggle-theme');
+const currentTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', currentTheme);
+toggleThemeButton.textContent = currentTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+
+toggleThemeButton.onclick = () => {
+  const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  toggleThemeBtn.textContent = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+};
