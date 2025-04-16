@@ -13,7 +13,7 @@ document
 
 // Fetches a payment intent and captures the client secret
 async function initialize() {
-  const response = await fetch("https://26c1-209-35-86-19.ngrok-free.app/create-payment-intent", {
+  const response = await fetch("https://2820-209-35-86-19.ngrok-free.app/create-payment-intent", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }),
