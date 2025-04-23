@@ -1,25 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Product Details</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Detail</title>
+  <link rel="stylesheet" href="switch-style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
+
 <body>
+  <header class="header">
+    <a href="/" aria-label="Back to Home">
+      <span class="material-symbols-outlined">keyboard_arrow_left</span>
+    </a>
+    <h1 id="product-title">Loading...</h1>
+  </header>
 
-  <nav>
-    <h1>Tile Auctions</h1>
-  </nav>
+  <main class="product-detail" style="padding: 2rem;">
+    <div class="product-wrapper" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+      <img id="product-image" src="" alt="Product Image" style="width: 100%; max-width: 400px; object-fit: cover;" />
 
-  <main class="product-detail" id="product-detail">
-    <!-- JS will fill this in -->
+      <div style="flex: 1;">
+        <p><strong>Item No:</strong> <span id="product-id"></span></p>
+        <p><strong>Description:</strong> <span id="product-description"></span></p>
+        <p><strong>Price:</strong> <span id="product-price"></span></p>
+        <!-- Add any other product details here -->
+      </div>
+    </div>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Tile Auctions. All rights reserved.</p>
+  <footer class="footer">
+    <small>
+      &copy; <span id="currentYear"></span> Tile Auctions. All rights reserved.
+      In partnership with
+      <a href="https://fbrmarble.com/" target="_blank" rel="noopener">
+        <strong>FBR Marble</strong>
+      </a>
+    </small>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="switch-script.js"></script>
+  <script src="product-script.js"></script>
 </body>
+
 </html>
