@@ -1,4 +1,4 @@
-fetch('/data/products.json')
+fetch('../data/products.json')
   .then(res => res.json())
   .then(products => {
     const carousel = document.querySelector('.product-grid');
@@ -10,9 +10,9 @@ fetch('/data/products.json')
       item.innerHTML = `
         <a href="product.html?item=${product['Item No.']}" class="product-grid__item-content" tabindex="0">
           <div class="product-grid__item-image-wrapper">
-            <img src="/images/${product['Item No.']}_720x720.webp"
+            <img src="../images/${product['Item No.']}_720x720.webp"
                  alt="${product['Item Description']}"
-                 onerror="this.onerror=null; this.src='images/placeholder.webp';"
+                 onerror="this.onerror=null; this.src='../images/placeholder.webp';"
                  class="product-grid__item-image">
             <div class="product-grid__item-sku">${product['Item No.']}</div>
             <div class="product-grid__item-name">${product['Item Description']}</div>
