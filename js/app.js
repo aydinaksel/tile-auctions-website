@@ -1,3 +1,11 @@
+import { setCurrentYear } from './utils.js';
+import { updateCartCount } from './cart.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+  setCurrentYear();
+  updateCartCount();
+});
+
 fetch('data/products.json')
   .then(res => res.json())
   .then(products => {
@@ -17,7 +25,6 @@ fetch('data/products.json')
             <div class="product-grid__item-sku">${product['Item No.']}</div>
             <div class="product-grid__item-name">${product['Item Description']}</div>
           </div>
-          <button class="button product-grid__item-button">Add to Cart</button>
         </a>
       `;
       carousel.appendChild(item);
@@ -25,10 +32,6 @@ fetch('data/products.json')
  })
  .catch(err => console.error('Error loading products:', err));
 
-// Update footer year
-document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-// Theme toggle
 const toggleButton = document.getElementById('toggle-theme');
 const icon = toggleButton.querySelector('.material-symbols-outlined');
 let theme = localStorage.getItem('theme') || 'light';

@@ -28,7 +28,6 @@
 *::before,
 *::after {
   margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -53,6 +52,10 @@ a:hover {
 /*-----------------------------
  * Buttons
 -----------------------------*/
+
+.button-wrapper {
+  width: 100%;
+}
 
 .button {
   display: inline-block;
@@ -124,23 +127,39 @@ a:hover {
   text-decoration: none;
 }
 
-.sidebar__icon {
-  font-size: 1.5rem;
-}
-
 .sidebar__label {
   font-size: 0.75rem;
   margin-top: 0.25rem;
 }
 
-.sidebar__badge {
+.sidebar__icon {
+  position: relative;
+  display: inline-block;
+}
+
+.sidebar__icon-badge {
+  --badge-size: 1.2rem;
+  --badge-radius: calc(var(--badge-size) / 2);
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  width: 0.75rem;
-  height: 0.75rem;
-  background: #007bff;
-  border-radius: 50%;
+  top: 0;
+  left: 100%;
+  transform: translateX(calc(-1 * var(--badge-radius))) translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #D32F2F;
+  color: #fff;
+  border-radius: var(--badge-radius);
+  height: var(--badge-size);
+  min-width: var(--badge-size);
+  padding: 0 .3rem;
+  font-size: .75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.sidebar__icon-badge[data-count="0"] {
+  display: none;
 }
 
 /*-----------------------------
@@ -175,6 +194,15 @@ a:hover {
 /*-----------------------------
   Product Grid
 -----------------------------*/
+.cart {
+  margin-left: var(--sidebar-width);
+}
+
+.cart-list-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .product-grid {
   margin-left: var(--sidebar-width);
   display: grid;

@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
   <nav class="sidebar">
     <div class="sidebar__group">
       <a href="/" class="sidebar__button" aria-label="Home">
@@ -22,11 +21,15 @@
         <span class="material-symbols-outlined sidebar__icon">search</span>
         <span class="sidebar__label">Search</span>
       </a>
+
       <a href="/cart.html" class="sidebar__button" aria-label="Cart">
-        <span class="material-symbols-outlined sidebar__icon">shopping_cart</span>
-        <span class="sidebar__badge" hidden></span>
+        <div class="sidebar__icon">
+          <span class="material-symbols-outlined">shopping_cart</span>
+          <span id="cart-count" class="sidebar__icon-badge" data-count="0">0</span>
+        </div>
         <span class="sidebar__label">Cart</span>
       </a>
+
       <a href="/profile" class="sidebar__button" aria-label="Profile">
         <span class="material-symbols-outlined sidebar__icon">person</span>
         <span class="sidebar__label">Profile</span>
@@ -60,14 +63,15 @@
         <p><strong>Stock:</strong> <span id="product-stock-quantity"></span></p>
         <p><strong>Item Group:</strong> <span id="product-group"></span></p>
         <p><strong>Price:</strong> <span id="product-price"></span></p>
-        <button class="button">Add to Cart</button>
+        <button id="add-to-cart" class="button">Add to Cart</button>
+        <div id="cart-feedback"></div>
       </div>
     </div>
   </main>
 
   <footer class="footer">
     <small>
-      &copy; <span id="currentYear"></span> Tile Auctions. All rights reserved.
+      &copy; <span id="current-year"></span> Tile Auctions. All rights reserved.
       In partnership with
       <a href="https://fbrmarble.com/" target="_blank" rel="noopener">
         <strong>FBR Marble</strong>
@@ -75,7 +79,7 @@
     </small>
   </footer>
 
-  <script src="js/product.js"></script>
+  <script type="module" src="js/product.js"></script>
 </body>
 
 </html>

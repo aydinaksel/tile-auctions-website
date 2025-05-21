@@ -1,7 +1,4 @@
-const stripe = Stripe("pk_test_51REaRuHCY5Xzf1mQ9i8srjwhMJxoP41U8aPBfIwTDz0Rus6Kynu14ZWDDiLFn9GIQ8RVUi0fuPLGoDETTokhSpUA00HD6cMfSL");
-
-// The items the customer wants to buy
-const items = [{ id: "xl-tshirt", amount: 1000 }];
+const stripe = Stripe("pk_test_51LgEwWIMKz7QU6pUCPNKUEIyYpNA502OaGUHnFiE8361zrWc66eU0RxD6qrJHMDVBD5i7vaSgQATUTi3Uj9qaWnT00OfU3WVTF");
 
 let elements;
 
@@ -11,14 +8,12 @@ document
   .querySelector("#payment-form")
   .addEventListener("submit", handleSubmit);
 
-// Fetches a payment intent and captures the client secret
 async function initialize() {
-  const response = await fetch("https://2820-209-35-86-19.ngrok-free.app/create-payment-intent", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ items }),
-  });
-  const { clientSecret } = await response.json();
+  const clientSecret = sessionStorage.getItem("stripeClientSecret");
+  if (!clientSecret) {
+    console.error("No client secret found – go back to cart first!");
+    return;
+  }
 
   const appearance = {
     theme: 'stripe',
@@ -40,8 +35,7 @@ async function handleSubmit(e) {
   const { error } = await stripe.confirmPayment({
     elements,
     confirmParams: {
-      // Make sure to change this to your payment completion page
-      return_url: "http://localhost:8000/index.html",
+      return_url: "https://f496-209-35-86-19.ngrok-free.app",
     },
   });
 
