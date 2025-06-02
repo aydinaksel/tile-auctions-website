@@ -36,7 +36,7 @@ async function handleSubmit(e) {
   const { error } = await stripe.confirmPayment({
     elements,
     confirmParams: {
-      return_url: "./success.html",
+      return_url: "https://aydinaksel.github.io/tile-auctions-website/success.html",
     },
   });
 

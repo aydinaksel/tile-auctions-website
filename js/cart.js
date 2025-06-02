@@ -162,6 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
       sessionStorage.setItem("stripeClientSecret", clientSecret);
       sessionStorage.setItem("paymentIntentId", paymentIntentId);
 
-      window.location.href = "https://aydinaksel.github.io/tile-auctions-website/";
+      window.location.href = "https://aydinaksel.github.io/tile-auctions-website/checkout.html";
   });
 });
