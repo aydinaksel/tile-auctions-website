@@ -156,9 +156,12 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items })
       });
-      const { clientSecret } = await resp.json();
+
+      const { client_secret: clientSecret, payment_intent_id: paymentIntentId } = await resp.json();
 
       sessionStorage.setItem("stripeClientSecret", clientSecret);
+      sessionStorage.setItem("paymentIntentId", paymentIntentId);
+
       window.location.href = "/checkout.html";
   });
 });

@@ -36,7 +36,7 @@ async function handleSubmit(e) {
   const { error } = await stripe.confirmPayment({
     elements,
     confirmParams: {
-      return_url: "https://f496-209-35-86-19.ngrok-free.app",
+      return_url: "./success.html",
     },
   });
 
