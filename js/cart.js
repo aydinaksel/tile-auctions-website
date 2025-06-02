@@ -1,4 +1,4 @@
-const API_URL = "https://ix4l6l8y36.execute-api.eu-west-1.amazonaws.com/production/create-payment-intent";
+const API_URL = "https://ix4l6l8y36.execute-api.eu-west-1.amazonaws.com/production/api/create-payment-intent";
 
 export function getCart() {
   return JSON.parse(localStorage.getItem('cart')) || [];
