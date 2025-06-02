@@ -1,4 +1,5 @@
-const stripe = Stripe("pk_test_51LgEwWIMKz7QU6pUCPNKUEIyYpNA502OaGUHnFiE8361zrWc66eU0RxD6qrJHMDVBD5i7vaSgQATUTi3Uj9qaWnT00OfU3WVTF");
+const stripe = Stripe("pk_test_51RVYcDGfeT1ew9GLiLKfe8kMIG6OqzjAtf8nwHg8gZKgQesXRbLFW6EQrTrND2oH4T9Zaw6reCsrUkN8z6gvKuC400fd1yMFc2");
+const API_URL = "https://ix4l6l8y36.execute-api.eu-west-1.amazonaws.com/production/create-checkout-session";
 
 let elements;
 

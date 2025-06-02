@@ -1,3 +1,5 @@
+const API_URL = "https://ix4l6l8y36.execute-api.eu-west-1.amazonaws.com/production/create-payment-intent";
+
 export function getCart() {
   return JSON.parse(localStorage.getItem('cart')) || [];
 }
@@ -145,11 +147,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const cart = JSON.parse(rawCart);
 
       const items = cart.map(item => ({
-        id: item["Item No."], 
-        amount: Math.round(item["U Base Price"] * 100) * item.quantity
+        price_id: item["stripe_price_id"], 
+        quantity: item.quantity
       }));
 
-      const resp = await fetch("https://f496-209-35-86-19.ngrok-free.app/create-payment-intent", {
+      const resp = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items })

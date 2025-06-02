@@ -12,7 +12,8 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 6.95,
-    "U Base Price": 12
+    "U Base Price": 12,
+    "stripe_price_id": "price_1RVZCpGfeT1ew9GLfTZHneRo"
   },
   {
     "#": 208,
@@ -27,7 +28,8 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 7.5,
-    "U Base Price": 10
+    "U Base Price": 10,
+    "stripe_price_id": "price_1RVZCHGfeT1ew9GLapRAOpD7"
   },
   {
     "#": 138,
@@ -42,7 +44,8 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 6.95,
-    "U Base Price": 8.69
+    "U Base Price": 8.69,
+    "stripe_price_id": "price_1RVZCpGfeT1ew9GLfTZHneRo"
   },
   {
     "#": 202,
@@ -57,7 +60,8 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 5.95,
-    "U Base Price": 7.44
+    "U Base Price": 7.44,
+    "stripe_price_id": "price_1RVZCpGfeT1ew9GLfTZHneRo"
   },
   {
     "#": 231,
@@ -72,7 +76,8 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 5.95,
-    "U Base Price": 10
+    "U Base Price": 10,
+    "stripe_price_id": "price_1RVZCpGfeT1ew9GLfTZHneRo"
   },
   {
     "#": 216,
@@ -87,7 +92,8 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 6.25,
-    "U Base Price": 7.44
+    "U Base Price": 7.44,
+    "stripe_price_id": "price_1RVZCpGfeT1ew9GLfTZHneRo"
   },
   {
     "#": 226,
@@ -102,7 +108,8 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 5,
-    "U Base Price": 12
+    "U Base Price": 12,
+    "stripe_price_id": "price_1RVZCpGfeT1ew9GLfTZHneRo"
   },
   {
     "#": 142,
@@ -117,7 +124,8 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 6.95,
-    "U Base Price": 8.69
+    "U Base Price": 8.69,
+    "stripe_price_id": "price_1RVZCpGfeT1ew9GLfTZHneRo"
   },
   {
     "#": 229,
@@ -132,7 +140,8 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 7.05,
-    "U Base Price": 12
+    "U Base Price": 12,
+    "stripe_price_id": "price_1RVZCHGfeT1ew9GLapRAOpD7"
   },
   {
     "#": 109,
@@ -147,7 +156,8 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 0,
-    "U Base Price": 5.63
+    "U Base Price": 5.63,
+    "stripe_price_id": "price_1RVZCHGfeT1ew9GLapRAOpD7"
   },
   {
     "#": 181,
@@ -162,7 +172,8 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 0,
-    "U Base Price": 4.9
+    "U Base Price": 4.9,
+    "stripe_price_id": "price_1RVZCHGfeT1ew9GLapRAOpD7"
   },
   {
     "#": 195,
@@ -177,7 +188,8 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 7.25,
-    "U Base Price": 10
+    "U Base Price": 10,
+    "stripe_price_id": "price_1RVZCHGfeT1ew9GLapRAOpD7"
   },
   {
     "#": 163,
@@ -192,6 +204,7 @@
     "Weight 1 - Sales Unit": 9,
     "Item Group": "Wall Panels",
     "Minimum Sales Price": 7,
-    "U Base Price": 10.45
+    "U Base Price": 10.45,
+    "stripe_price_id": "price_1RVZCHGfeT1ew9GLapRAOpD7"
   }
 ]
