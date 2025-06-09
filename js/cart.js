@@ -1,4 +1,12 @@
 const API_URL = "https://ix4l6l8y36.execute-api.eu-west-1.amazonaws.com/production/api/create-payment-intent";
+let products = [];
+
+export function loadProducts() {
+  return fetch('data/products.json')
+    .then(response => response.json())
+    .then(data => { products = data; })
+    .catch(error => console.error('Error loading product data:', error));
+}
 
 export function getCart() {
   return JSON.parse(localStorage.getItem('cart')) || [];
@@ -12,12 +20,20 @@ export function addToCart(product) {
   const cart = getCart();
   const existing = cart.find(p => p["Item No."] === product["Item No."]);
 
+  const maxQty = parseInt(product["In Stock"], 10) || 0;
+  if (maxQty <= 0) {
+    // nothing to add if out of stock
+    return { error: 'Out of stock' };
+  }
+
   if (existing) {
-    existing.quantity = (existing.quantity || 1) + 1;
+    // bump straight to the maximum
+    existing.quantity = maxQty;
     saveCart(cart);
     return { updated: true };
   } else {
-    product.quantity = 1;
+    // add with full stock quantity
+    product.quantity = maxQty;
     cart.push(product);
     saveCart(cart);
     return { added: true };
@@ -34,58 +50,83 @@ export function updateCartCount() {
   if (!cartCountBadge) return;
 
   const cartCount = getCartCount();
-  cartCountBadge.textContent = cartCount > 999 ? '999+' : cartCount;
+  cartCountBadge.textContent = cartCount > 9999 ? '9999+' : cartCount;
   cartCountBadge.setAttribute('data-count', cartCount);
 }
 
 function renderCart() {
-const cart = getCart();
-const list = document.getElementById('cart-list');
-list.innerHTML = '';
+  const cart = getCart();
+  const list = document.getElementById('cart-list');
+  list.innerHTML = '';
 
-if (cart.length === 0) {
-  const empty = document.createElement('p');
-  empty.textContent = 'Your cart is empty.';
-  list.appendChild(empty);
-  return;
-}
+  if (cart.length === 0) {
+    list.innerHTML = `<p>Your cart is empty.</p>`;
+    return;
+  }
 
-cart.forEach((item, index) => {
-  const li = document.createElement('md-list-item');
-  li.type = 'text';
+  cart.forEach((item, index) => {
+    const productData = products.find(p => p['Item No.'] === item['Item No.']);
+    const stockQuantity = productData ? parseInt(productData['In Stock'], 10) : Infinity;
 
-  // Headline: product description
-  const head = document.createElement('a');
-  head.slot = 'headline';
-  head.href = `product.html?item=${item['Item No.']}`;
-  head.textContent = item['Item Description'];
-  li.append(head);
+    const listItem = document.createElement('md-list-item');
+    listItem.type = 'text';
 
-  // Supporting text: SKU
-  const sup = document.createElement('div');
-  sup.slot = 'supporting-text';
-  sup.textContent = `SKU: ${item['Item No.']}`;
-  li.append(sup);
+    // Headline: product description
+    const head = document.createElement('a');
+    head.slot = 'headline';
+    head.href = `product.html?item=${item['Item No.']}`;
+    head.textContent = item['Item Description'];
+    listItem.append(head);
 
-  // Trailing text: quantity controls
-  const trail = document.createElement('div');
-  trail.slot = 'trailing-supporting-text';
-  trail.innerHTML = `
-    <button class="qty-btn" data-index="${index}" data-action="decrease">−</button>
-    <span class="quantity">${item.quantity || 1}</span>
-    <button class="qty-btn" data-index="${index}" data-action="increase">+</button>
-  `;
-  li.append(trail);
+    // Supporting text: SKU
+    const sup = document.createElement('div');
+    sup.slot = 'supporting-text';
+    sup.textContent = `SKU: ${item['Item No.']}`;
+    listItem.append(sup);
 
-  // Remove button
-  const removeBtn = document.createElement('md-icon-button');
-  removeBtn.slot = 'end';
-  removeBtn.classList.add('remove-btn');
-  removeBtn.dataset.index = index;
-  removeBtn.innerHTML = `<md-icon>delete</md-icon>`;
-    li.append(removeBtn);
+    const itemImage = document.createElement('img');
+    itemImage.slot = 'start';
+    itemImage.style = 'width: 56px';
+    itemImage.src = `images/${item['Item No.']}_720x720.webp`;
+    listItem.append(itemImage);
 
-    list.append(li);
+    const trail = document.createElement('div');
+    trail.slot = 'trailing-supporting-text';
+    const qtyField = document.createElement('md-outlined-text-field');
+    qtyField.type = 'number';
+    qtyField.min = '1';
+    qtyField.max = String(stockQuantity);;
+    qtyField.step = '1';
+    qtyField.value = String(Math.min(item.quantity || 1, stockQuantity));
+    qtyField.setAttribute('aria-label', 'Quantity');
+
+    qtyField.addEventListener('change', e => {
+      let newQty = parseInt(e.target.value, 10) || 1;
+      if (newQty > stockQuantity) {
+        newQty = stockQuantity;
+        e.target.value = stockQuantity;
+
+        // CHANGED: inline feedback
+        const fb = document.createElement('div');
+        fb.className = 'quantity-feedback';
+        fb.textContent = `Only ${stockQuantity} in stock.`;
+        listItem.append(fb);
+        setTimeout(() => fb.remove(), 2000);
+      }
+      updateQuantity(index, newQty);
+    });
+
+    trail.append(qtyField);
+    listItem.append(trail);
+
+    const clearButton = document.createElement('md-icon-button');
+    clearButton.slot = 'end';
+    clearButton.classList.add('remove-btn');
+    clearButton.dataset.index = index;
+    clearButton.innerHTML = `<md-icon>delete</md-icon>`;
+    listItem.append(clearButton);
+
+    list.append(listItem);
     if (index < cart.length - 1) {
       list.append(document.createElement('md-divider'));
     }
@@ -93,10 +134,14 @@ cart.forEach((item, index) => {
 }
 
 // Handlers
-function updateQuantity(index, action) {
+function updateQuantity(index, newQtyOrAction) {
   const cart = getCart();
-  const qty = cart[index].quantity || 1;
-  cart[index].quantity = action === 'increase' ? qty + 1 : Math.max(1, qty - 1);
+  const current = cart[index].quantity || 1;
+
+  cart[index].quantity = typeof newQtyOrAction === 'number'
+    ? Math.max(1, newQtyOrAction)
+    : (newQtyOrAction === 'increase' ? current + 1 : Math.max(1, current - 1));
+
   saveCart(cart);
   renderCart();
   updateCartCount();
@@ -110,21 +155,15 @@ function removeItem(index) {
   updateCartCount();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   if (!window.location.pathname.endsWith('/cart.html')) return;
 
+  await loadProducts();
   updateCartCount();
   renderCart();
 
   const listEl = document.getElementById('cart-list');
   listEl.addEventListener('click', e => {
-    // Quantity buttons
-    const btn = e.target.closest('button.qty-btn');
-    if (btn) {
-      updateQuantity(+btn.dataset.index, btn.dataset.action);
-      return;
-    }
-    // Remove icon button
     const rm = e.target.closest('md-icon-button.remove-btn');
     if (rm) {
       removeItem(+rm.dataset.index);

@@ -8,9 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const itemId = params.get('item');
 
-  const qtyEl = document.getElementById('cart-quantity');
-  const incBtn = document.getElementById('increase-qty');
-  const decBtn = document.getElementById('decrease-qty');
+  const qtyField = document.getElementById('cart-quantity-field');
+  const feedback = document.getElementById('cart-feedback');
   const prevLink = document.getElementById('prev-product');
   const nextLink = document.getElementById('next-product');
 
@@ -20,39 +19,23 @@ document.addEventListener('DOMContentLoaded', () => {
     return item ? (item.quantity || 1) : 0;
   }
 
-  function updateQtyDisplay(qty) {
-    qtyEl.textContent = qty;
-  }
-
-  function changeQuantity(action) {
+  function setProductQuantity(newQty) {
     const cart = getCart();
-    const idx = cart.findIndex(p => p['Item No.'] === itemId);
-    let qty = 0;
+    const idx  = cart.findIndex(p => p['Item No.'] === itemId);
 
-    if (idx === -1) {
-      if (action === 'increase') {
-        product.quantity = 1;
-        cart.push(product);
-        qty = 1;
-      }
+    if (newQty <= 0) {
+      if (idx !== -1) cart.splice(idx, 1);
     } else {
-      qty = cart[idx].quantity || 1;
-      if (action === 'increase') {
-        qty += 1;
-        cart[idx].quantity = qty;
+      if (idx === -1) {
+        product.quantity = newQty;
+        cart.push(product);
       } else {
-        qty = Math.max(0, qty - 1);
-        if (qty === 0) {
-          cart.splice(idx, 1);
-        } else {
-          cart[idx].quantity = qty;
-        }
+        cart[idx].quantity = newQty;
       }
     }
 
     saveCart(cart);
     updateCartCount();
-    updateQtyDisplay(qty);
   }
 
   fetch('data/products.json')
@@ -74,10 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      const stockQty = parseInt(product["In Stock"], 10);
+
       titleEl.textContent         = product["Item Description"];
       idEl.textContent            = product["Item No."];
       descEl.textContent          = product["Item Description"];
-      stockQuantityEl.textContent = product["In Stock"];
+      stockQuantityEl.textContent = stockQty;
       groupEl.textContent         = product["Item Group"];
       priceEl.textContent = product["U Base Price"] != null
         ? `$${product["U Base Price"].toFixed(2)}`
@@ -99,8 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
         nextLink.style.visibility = 'hidden';
       }
 
-      updateQtyDisplay(currentQuantity());
 
+      qtyField.setAttribute('min', '0');
+      qtyField.setAttribute('max', stockQty);
+      const initialQuantity = currentQuantity()
+
+      qtyField.value = Math.min(initialQuantity, stockQty);
     })
     .catch(err => {
       console.error('Error loading product:', err);
@@ -109,32 +98,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   const addToCartBtn = document.getElementById('add-to-cart');
-  const feedback     = document.getElementById('cart-feedback');
 
   addToCartBtn.addEventListener('click', () => {
     if (!product) return;
-    const result = addToCart(product);
-
+    addToCart(product);
     updateCartCount();
-    updateQtyDisplay(currentQuantity());
+    const cart = getCart();
+    const item = cart.find(p => p['Item No.'] === product['Item No.']);
+    qtyField.value = item ? item.quantity : 0;
 
-    if (result.added) {
-      feedback.textContent = '✅ Added to cart!';
-    } else if (result.updated) {
-      feedback.textContent = '➕ Quantity updated!';
-    } else {
-      feedback.textContent = 'Cart unchanged.';
-    }
-
+    // 4) clear any feedback in 2s
     setTimeout(() => feedback.textContent = '', 2000);
   });
 
-  incBtn.addEventListener('click', () => {
-    if (product) changeQuantity('increase');
-  });
+  qtyField.addEventListener('input', e => {
+    let val = parseInt(e.target.value, 10) || 0;
+    const max = parseInt(e.target.max, 10);
 
-  decBtn.addEventListener('click', () => {
-    if (product) changeQuantity('decrease');
+    if (val > max) {
+      // snap it back
+      val = max;
+      e.target.value = max;
+      feedback.textContent = `Only ${max} in stock.`;
+      setTimeout(() => feedback.textContent = '', 2000);
+    }
+
+    setProductQuantity(val);
   });
 });
 

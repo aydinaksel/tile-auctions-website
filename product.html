@@ -8,6 +8,19 @@
 
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+  </script>
+  <script type="module">
+    import '@material/web/all.js';
+    import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+
+    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+  </script>
 </head>
 
 <body>
@@ -44,36 +57,73 @@
   </nav>
 
   <main class="product-detail">
+
     <div class="product-detail__item">
+
       <div class="product-detail__item-image-wrapper">
         <img id="product-image" src="" alt="Product Image" class="product-detail__item-image" />
       </div>
 
       <div class="product-detail__item-info">
-        <div class="product-nav">
-          <a id="prev-product" aria-label="Previous product">
-            <span class="material-symbols-outlined">keyboard_arrow_left</span>
-          </a>
-          <a id="next-product" aria-label="Next product">
-            <span class="material-symbols-outlined">keyboard_arrow_right</span>
-          </a>
-        </div>
+        <div class="product-detail__toolbar" role="toolbar">
+          <!-- Back button -->
+          <md-icon-button id="prev-product" aria-label="Previous product">
+            <md-icon>arrow_back</md-icon>
+          </md-icon-button>
 
+          <md-icon-button id="next-product" aria-label="Next product">
+            <md-icon>arrow_forward</md-icon>
+          </md-icon-button>
+
+          <!-- Space filler -->
+          <div class="spacer"></div>
+
+          <!-- Favorite (toggle) -->
+          <md-icon-button toggle aria-label="Add to favorites" aria-label-selected="Remove from favorites">
+            <md-icon>favorite_border</md-icon>
+            <md-icon slot="selected">favorite</md-icon>
+          </md-icon-button>
+
+          <!-- Share -->
+          <md-icon-button aria-label="Share this product">
+            <md-icon>share</md-icon>
+          </md-icon-button>
+
+          <!-- Overflow menu -->
+          <md-icon-button aria-label="More options">
+            <md-icon>more_vert</md-icon>
+          </md-icon-button>
+        </div>
         <h1 id="product-title">Loading...</h1>
-        <p><strong>Item No:</strong> <span id="product-id"></span></p>
-        <p><strong>Description:</strong> <span id="product-description"></span></p>
-        <p><strong>Stock:</strong> <span id="product-stock-quantity"></span></p>
-        <p><strong>Item Group:</strong> <span id="product-group"></span></p>
-        <p><strong>Price:</strong> <span id="product-price"></span></p>
 
-        <div class="quantity-controls">
-          <button id="decrease-qty" class="qty-btn" aria-label="Decrease quantity">−</button>
-          <span id="cart-quantity">0</span>
-          <button id="increase-qty" class="qty-btn" aria-label="Increase quantity">+</button>
-        </div>
+        <table>
+          <tr>
+            <th scope="row">SKU:</th>
+            <td><span id="product-id"></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Description:</th>
+            <td><span id="product-description"></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Stock Quantity:</th>
+            <td><span id="product-stock-quantity"></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Item Group:</th>
+            <td><span id="product-group"></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Price:</th>
+            <td><span id="product-price"></span></td>
+          </tr>
+        </table>
 
-        <button id="add-to-cart" class="button">Add to Cart</button>
-        <a href="cart.html" class="button">Checkout</a>
+        <md-outlined-text-field id="cart-quantity-field" type="number" min="0" step="1" aria-label="Quantity in cart"
+          value="0">
+        </md-outlined-text-field>
+        <md-outlined-button id="add-to-cart">Add to Cart</md-outlined-button>
+        <md-filled-button href="cart.html">Checkout</md-filled-button>
         <div id="cart-feedback"></div>
       </div>
     </div>
