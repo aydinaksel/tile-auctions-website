@@ -49,13 +49,15 @@
         <img id="product-image" src="" alt="Product Image" class="product-detail__item-image" />
       </div>
 
-      <div style="flex: 1;">
-        <a href="./" aria-label="Back to Home">
-          <span class="material-symbols-outlined">keyboard_arrow_left</span>
-        </a>
-        <a href="./" aria-label="Back to Home">
-          <span class="material-symbols-outlined">keyboard_arrow_right</span>
-        </a>
+      <div class="product-detail__item-info">
+        <div class="product-nav">
+          <a id="prev-product" aria-label="Previous product">
+            <span class="material-symbols-outlined">keyboard_arrow_left</span>
+          </a>
+          <a id="next-product" aria-label="Next product">
+            <span class="material-symbols-outlined">keyboard_arrow_right</span>
+          </a>
+        </div>
 
         <h1 id="product-title">Loading...</h1>
         <p><strong>Item No:</strong> <span id="product-id"></span></p>
@@ -63,7 +65,15 @@
         <p><strong>Stock:</strong> <span id="product-stock-quantity"></span></p>
         <p><strong>Item Group:</strong> <span id="product-group"></span></p>
         <p><strong>Price:</strong> <span id="product-price"></span></p>
+
+        <div class="quantity-controls">
+          <button id="decrease-qty" class="qty-btn" aria-label="Decrease quantity">−</button>
+          <span id="cart-quantity">0</span>
+          <button id="increase-qty" class="qty-btn" aria-label="Increase quantity">+</button>
+        </div>
+
         <button id="add-to-cart" class="button">Add to Cart</button>
+        <a href="cart.html" class="button">Checkout</a>
         <div id="cart-feedback"></div>
       </div>
     </div>
