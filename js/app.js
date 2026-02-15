@@ -6,9 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartCount();
 });
 
-fetch('data/products.json')
+fetch('/api/products.json')
   .then(res => res.json())
-  .then(products => {
+  .then(data => {
+    const products = data.products;
     const carousel = document.querySelector('.product-grid');
     const slider = document.getElementById('item-slider');
 
@@ -16,14 +17,25 @@ fetch('data/products.json')
       const item = document.createElement('div');
       item.className = 'product-grid__item';
       item.innerHTML = `
-        <a href="product.html?item=${product['Item No.']}" class="product-grid__item-content" tabindex="0">
+        <a href="product.html?item=${product['item_code']}" class="product-grid__item-content" tabindex="0">
           <div class="product-grid__item-image-wrapper">
-            <img src="images/${product['Item No.']}_720x720.webp"
-                 alt="${product['Item Description']}"
+            <img src="images/${product['item_code']}/processed/medium/${product['item_code']}.webp"
+                 alt="${product['item_name']}"
                  onerror="this.onerror=null; this.src='images/placeholder.webp';"
                  class="product-grid__item-image">
-            <div class="product-grid__item-sku">${product['Item No.']}</div>
-            <div class="product-grid__item-name">${product['Item Description']}</div>
+
+            <div class="product-grid__item-top-left">
+              <div class="product-grid__item-sku">${product['item_code']}</div>
+            </div>
+
+            <div class="product-grid__item-top-right">
+              <div class="product-grid__item-name">${product['item_name']}</div>
+              <div class="product-grid__item-name">Length by Width: ${product['item_length_by_width']}</div>
+              <div class="product-grid__item-name">Thickness: ${product['item_thickness']}</div>
+              <div class="product-grid__item-name">UoM: ${product['unit_of_measurement']}</div>
+              <div class="product-grid__item-name">Quantity in Stock: ${product['available_quantity']}</div>
+              <div class="product-grid__item-name">Price per Unit: $${product['item_price']}</div>
+            </div>
           </div>
         </a>
       `;

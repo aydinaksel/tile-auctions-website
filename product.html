@@ -96,27 +96,14 @@
         </div>
         <h1 id="product-title">Loading...</h1>
 
-        <table>
-          <tr>
-            <th scope="row">SKU:</th>
-            <td><span id="product-id"></span></td>
-          </tr>
-          <tr>
-            <th scope="row">Description:</th>
-            <td><span id="product-description"></span></td>
-          </tr>
-          <tr>
-            <th scope="row">Stock Quantity:</th>
-            <td><span id="product-stock-quantity"></span></td>
-          </tr>
-          <tr>
-            <th scope="row">Item Group:</th>
-            <td><span id="product-group"></span></td>
-          </tr>
-          <tr>
-            <th scope="row">Price:</th>
-            <td><span id="product-price"></span></td>
-          </tr>
+        <table id="product-info">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
         </table>
 
         <md-outlined-text-field id="cart-quantity-field" type="number" min="0" step="1" aria-label="Quantity in cart"

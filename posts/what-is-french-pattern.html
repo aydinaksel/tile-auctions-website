@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>What Is French Pattern?</title>
+  <style>
+    html {
+      max-width: 70ch;
+      padding: 3em 1em;
+      margin: auto;
+      line-height: 1.75;
+      font-size: 1.25em;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin: 3em 0 1em;
+    }
+
+    p,
+    ul,
+    ol {
+      margin-bottom: 2em;
+      color: #1d1d1d;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="sidebar">
+    <div class="sidebar__group">
+      <a href="../" class="sidebar__button" aria-label="Home">
+        <span class="material-symbols-outlined sidebar__icon">home</span>
+        <span class="sidebar__label">Home</span>
+      </a>
+      <!--
+      <a href="./search" class="sidebar__button" aria-label="Search">
+        <span class="material-symbols-outlined sidebar__icon">search</span>
+        <span class="sidebar__label">Search</span>
+      </a>
+      -->
+      <a href="../cart.html" class="sidebar__button" aria-label="Cart">
+        <div class="sidebar__icon">
+          <span class="material-symbols-outlined">shopping_cart</span>
+          <span id="cart-count" class="sidebar__icon-badge" data-count="0">0</span>
+        </div>
+        <span class="sidebar__label">Cart</span>
+      </a>
+      <!--
+      <a href="./profile" class="sidebar__button" aria-label="Profile">
+        <span class="material-symbols-outlined sidebar__icon">person</span>
+        <span class="sidebar__label">Profile</span>
+      </a>
+      -->
+      <a href="../blog.html" class="sidebar__button" aria-label="Blog">
+        <div class="sidebar__icon">
+          <span class="material-symbols-outlined">web_stories</span>
+          <span id="cart-count" class="sidebar__icon-badge" data-count="0">0</span>
+        </div>
+        <span class="sidebar__label">Blog</span>
+      </a>
+    </div>
+    <div class="sidebar__group">
+      <button id="toggle-theme" class="sidebar__button" aria-label="Toggle theme">
+        <span class="material-symbols-outlined sidebar__icon">dark_mode</span>
+        <span class="sidebar__label">Theme</span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <article>
+      <h2>First Post</h2>
+      <p class="meta">June 30, 2025 • Tags: HTML, Web</p>
+
+      <p>Welcome to my blog! In this post, we’ll talk about how to make a blog using vanilla HTML, CSS, and JavaScript.
+      </p>
+
+      <h3>Why Vanilla?</h3>
+      <p>Because it helps you understand the fundamentals before using tools like static site generators or CMS
+        platforms.</p>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <small>
+      &copy; <span id="current-year"></span> Tile Auctions. All rights reserved.
+      In partnership with
+      <a href="https://fbrmarble.com/" target="_blank" rel="noopener">
+        <strong>FBR Marble</strong>
+      </a>
+    </small>
+  </footer>
+
+  <script type="module" src="../js/blog.js"></script>
+</body>
+
+</html>

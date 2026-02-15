@@ -18,7 +18,7 @@ export function saveCart(cart) {
 
 export function addToCart(product) {
   const cart = getCart();
-  const existing = cart.find(p => p["Item No."] === product["Item No."]);
+  const existing = cart.find(p => p["item_code"] === product["item_code"]);
 
   const maxQty = parseInt(product["In Stock"], 10) || 0;
   if (maxQty <= 0) {
@@ -65,8 +65,8 @@ function renderCart() {
   }
 
   cart.forEach((item, index) => {
-    const productData = products.find(p => p['Item No.'] === item['Item No.']);
-    const stockQuantity = productData ? parseInt(productData['In Stock'], 10) : Infinity;
+    const productData = products.find(p => p['item_code'] === item['item_code']);
+    const stockQuantity = productData ? parseInt(productData['available_quantity'], 10) : Infinity;
 
     const listItem = document.createElement('md-list-item');
     listItem.type = 'text';
@@ -74,20 +74,20 @@ function renderCart() {
     // Headline: product description
     const head = document.createElement('a');
     head.slot = 'headline';
-    head.href = `product.html?item=${item['Item No.']}`;
-    head.textContent = item['Item Description'];
+    head.href = `product.html?item=${item['item_code']}`;
+    head.textContent = item['item_name'];
     listItem.append(head);
 
     // Supporting text: SKU
     const sup = document.createElement('div');
     sup.slot = 'supporting-text';
-    sup.textContent = `SKU: ${item['Item No.']}`;
+    sup.textContent = `SKU: ${item['item_code']}`;
     listItem.append(sup);
 
     const itemImage = document.createElement('img');
     itemImage.slot = 'start';
     itemImage.style = 'width: 56px';
-    itemImage.src = `images/${item['Item No.']}_720x720.webp`;
+    itemImage.src = `images/${item.item_code}/processed/medium/${item.item_code}.webp`;
     listItem.append(itemImage);
 
     const trail = document.createElement('div');
@@ -201,6 +201,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       sessionStorage.setItem("stripeClientSecret", clientSecret);
       sessionStorage.setItem("paymentIntentId", paymentIntentId);
 
-      window.location.href = "https://aydinaksel.github.io/tile-auctions-website/checkout.html";
+      window.location.href = "/checkout.html";
   });
 });
